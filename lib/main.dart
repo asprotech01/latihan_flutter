@@ -43,21 +43,23 @@ class MyHome extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: Center(child: const myText()));
+    return Scaffold(body: Center(child: const MyText()));
   }
 }
 
-class myText extends StatelessWidget {
-  const myText({super.key});
+class MyText extends StatelessWidget {
+  const MyText({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Text(
-      'Hello, World!',
+      'ASPROTECH CORP',
       style: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: Colors.blue,
+        letterSpacing: 3,
+        decoration: TextDecoration.underline,
       ),
     );
   }
