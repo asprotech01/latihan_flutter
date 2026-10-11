@@ -51,13 +51,13 @@ class MyHome extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: const [
-              MyText(), 
+              MyText(),
               SizedBox(height: 20),
-              NewStyleText(), 
+              NewStyleText(),
               SizedBox(height: 20),
-              OverflowText(), 
+              OverflowText(),
               SizedBox(height: 20),
-
+              AlignmentText(),
             ],
           ),
         ),
@@ -94,14 +94,10 @@ class NewStyleText extends StatelessWidget {
         fontStyle: FontStyle.italic,
         color: Colors.green,
         letterSpacing: 2,
-         shadows: [
-              Shadow(
-                offset: Offset(3, 3),
-                blurRadius: 5,
-                color: Colors.grey,
-       ),
-      ]
-     )
+        shadows: [
+          Shadow(offset: Offset(3, 3), blurRadius: 5, color: Colors.grey),
+        ],
+      ),
     );
   }
 }
@@ -118,6 +114,63 @@ class OverflowText extends StatelessWidget {
       overflow: TextOverflow
           .ellipsis, // Kalau kepanjangan, potong dan kasih titik-titik (...)
       style: TextStyle(fontSize: 16, color: Colors.black54),
+    );
+  }
+}
+
+class AlignmentText extends StatelessWidget {
+  const AlignmentText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.blueGrey),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: const [
+          SizedBox(
+            width: double
+                .infinity, //PAKE Double.infinity biar teksnya bisa full lebar
+            child: Text(
+              'Teks Rata Kiri (Left)',
+              textAlign: TextAlign.left,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Teks Rata Tengah (Center)',
+              textAlign: TextAlign.center,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Teks Rata Kanan (Right)',
+              textAlign: TextAlign.right,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+          SizedBox(height: 12),
+          SizedBox(
+            width: double.infinity,
+            child: Text(
+              'Justify: Flutter adalah framework untuk membuat aplikasi menggunakan satu codebase yang responsif.',
+              textAlign: TextAlign.justify,
+              style: TextStyle(fontSize: 16),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
