@@ -45,14 +45,21 @@ class MyHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: Column(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Biar posisinya pas di tengah layar
-          children: [
-            MyText(), // Teks lama kamu (ASPROTECH CORP)
-            SizedBox(height: 20), // Spasi jarak ke bawah
-            NewText(),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(20.0),
+          // Menggunakan Column untuk menumpuk semua teks ke bawah
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: const [
+              MyText(), 
+              SizedBox(height: 20),
+              NewStyleText(), 
+              SizedBox(height: 20),
+              OverflowText(), 
+              SizedBox(height: 20),
+
+            ],
+          ),
         ),
       ),
     );
@@ -64,32 +71,53 @@ class MyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       'ASPROTECH CORP',
       style: TextStyle(
         fontSize: 24,
         fontWeight: FontWeight.bold,
         color: Colors.blue,
-        letterSpacing: 3,
-        decoration: TextDecoration.underline,
       ),
     );
   }
 }
 
-class NewText extends StatelessWidget {
-  const NewText({super.key});
+class NewStyleText extends StatelessWidget {
+  const NewStyleText({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const Text(
-      'Belajar widget flutter',
+      'Sedang Belajar Widget Flutter & Dart',
       style: TextStyle(
         fontSize: 18,
         fontStyle: FontStyle.italic,
         color: Colors.green,
-        letterSpacing: 2, // Contoh materi spasi dari dokumen
-      ),
+        letterSpacing: 2,
+         shadows: [
+              Shadow(
+                offset: Offset(3, 3),
+                blurRadius: 5,
+                color: Colors.grey,
+       ),
+      ]
+     )
+    );
+  }
+}
+
+class OverflowText extends StatelessWidget {
+  const OverflowText({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text(
+      'Ini adalah contoh teks yang sangat panjang dan melebihi batas lebar layar. Teks ini akan dipotong dan diganti dengan titik-titik jika terlalu panjang untuk ditampilkan sepenuhnya.',
+      textAlign: TextAlign.center,
+      maxLines: 2, // Batasi cuma boleh tampil maksimal 2 baris
+      overflow: TextOverflow
+          .ellipsis, // Kalau kepanjangan, potong dan kasih titik-titik (...)
+      style: TextStyle(fontSize: 16, color: Colors.black54),
     );
   }
 }
