@@ -58,6 +58,8 @@ class MyHome extends StatelessWidget {
               OverflowText(),
               SizedBox(height: 20),
               AlignmentText(),
+              SizedBox(height: 20),
+              RichTextWidget(),
             ],
           ),
         ),
@@ -170,6 +172,42 @@ class AlignmentText extends StatelessWidget {
             ),
           ),
         ],
+      ),
+    );
+  }
+}
+
+class RichTextWidget extends StatelessWidget {
+  const RichTextWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        border: Border.all(color: Colors.orange),
+        borderRadius: BorderRadius.circular(8),
+      ),
+      child: RichText(
+        text: const TextSpan(
+          style: TextStyle(fontSize: 18, color: Colors.black),
+          children: [
+            TextSpan(text: 'Mari belajar Flutter '),
+            TextSpan(
+              text: 'Flutter',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.blue),
+            ),
+            TextSpan(text: ' dan '),
+            TextSpan(
+              text: 'Dart',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.green,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
