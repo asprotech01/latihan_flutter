@@ -26,23 +26,84 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       themeMode: ThemeMode.system,
-      home: const ProfilePage(),
+      home: const HomePage(),
     );
   }
 }
 
+// 1. Halaman Beranda (Home) sebagai pintu masuk utama
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Dashboard Mahasiswa')),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Icon(Icons.school_rounded, size: 80, color: Colors.green),
+              const SizedBox(height: 24),
+              const Text(
+                'Selamat Datang, Achmad Sofyan',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Sistem Informasi Akademik Mahasiswa',
+                style: TextStyle(color: Colors.grey, fontSize: 14),
+              ),
+              const SizedBox(height: 40),
+
+              // Tombol untuk navigasi ke ProfilePage
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const ProfilePage(),
+                    ),
+                  );
+                },
+                icon: const Icon(Icons.person),
+                label: const Text('Lihat Profil Mahasiswa'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                  foregroundColor: Colors.white,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 24,
+                    vertical: 12,
+                  ),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 2. Halaman Profil yang diakses dari Beranda
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard Mahasiswa')),
+      appBar: AppBar(title: const Text('Halaman Profil')),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.all(24.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const CircleAvatar(
               radius: 50,
               backgroundColor: Colors.green,
@@ -62,7 +123,7 @@ class ProfilePage extends StatelessWidget {
                 letterSpacing: 1,
               ),
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 20),
             Card(
               elevation: 0,
               shape: RoundedRectangleBorder(
@@ -83,6 +144,55 @@ class ProfilePage extends StatelessWidget {
                       leading: Icon(Icons.school_outlined, color: Colors.green),
                       title: Text('Program Studi'),
                       subtitle: Text('Software Engineering'),
+                    ),
+                    Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(
+                        Icons.verified_user_outlined,
+                        color: Colors.green,
+                      ),
+                      title: Text('Status Akademik'),
+                      subtitle: Text('Aktif (Semester 4)'),
+                    ),
+                    Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.star_outline, color: Colors.green),
+                      title: Text('IPK Sementara'),
+                      subtitle: Text('3.85'),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            const Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                'Mata Kuliah Semester Ini',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              ),
+            ),
+            const SizedBox(height: 10),
+            Card(
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12),
+                side: BorderSide(color: Colors.grey.withOpacity(0.2)),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 8.0),
+                child: Column(
+                  children: const [
+                    ListTile(
+                      leading: Icon(Icons.code, color: Colors.green),
+                      title: Text('Pemrograman Aplikasi Mobile'),
+                      subtitle: Text('3 SKS • Selasa'),
+                    ),
+                    Divider(height: 1, indent: 16, endIndent: 16),
+                    ListTile(
+                      leading: Icon(Icons.storage, color: Colors.green),
+                      title: Text('Kecerdasan Buatan'),
+                      subtitle: Text('3 SKS • Rabu'),
                     ),
                   ],
                 ),
