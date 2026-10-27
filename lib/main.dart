@@ -1,203 +1,220 @@
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MaterialApp(home: LayoutRulesExample()));
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Aplikasi Mahasiswa',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        brightness: Brightness.light,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
-        useMaterial3: true,
-      ),
-      darkTheme: ThemeData(
-        brightness: Brightness.dark,
-        colorScheme: ColorScheme.fromSeed(
-          seedColor: Colors.green,
-          brightness: Brightness.dark,
-        ),
-        useMaterial3: true,
-      ),
-      themeMode: ThemeMode.system,
-      home: const HomePage(),
-    );
-  }
-}
-
-// 1. Halaman Beranda (Home) sebagai pintu masuk utama
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class LayoutRulesExample extends StatelessWidget {
+  const LayoutRulesExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Dashboard Mahasiswa')),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.school_rounded, size: 80, color: Colors.green),
-              const SizedBox(height: 24),
-              const Text(
-                'Selamat Datang, Achmad Sofyan',
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
-              ),
-              const SizedBox(height: 8),
-              const Text(
-                'Sistem Informasi Akademik Mahasiswa',
-                style: TextStyle(color: Colors.grey, fontSize: 14),
-              ),
-              const SizedBox(height: 40),
-
-              // Tombol untuk navigasi ke ProfilePage
-              ElevatedButton.icon(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const ProfilePage(),
-                    ),
-                  );
-                },
-                icon: const Icon(Icons.person),
-                label: const Text('Lihat Profil Mahasiswa'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 24,
-                    vertical: 12,
-                  ),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
+      appBar: AppBar(title: const Text('Tiga Aturan Layout Flutter')),
+      body: MyPages(),
     );
   }
 }
 
-// 2. Halaman Profil yang diakses dari Beranda
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class MyPages1 extends StatelessWidget {
+  const MyPages1({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Halaman Profil')),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(20.0),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              '1 & 2. Aturan Constraints (Batas) dan Size (Ukuran)',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 10),
-            const CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.green,
-              child: Icon(Icons.person_rounded, size: 50, color: Colors.white),
-            ),
-            const SizedBox(height: 16),
             const Text(
-              'Achmad Sofyan',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              'Induk memaksa anak berada di batas 100x100 hingga 200x200. Anak meminta ukuran 500x50, tapi dipaksa mengikuti batas induk (mentok di lebar 200, tinggi 100).',
             ),
-            const SizedBox(height: 4),
-            const Text(
-              'NIM: 1124160171',
-              style: TextStyle(
-                color: Colors.grey,
-                fontSize: 14,
-                letterSpacing: 1,
+            const SizedBox(height: 10),
+
+            // CONTOH ATURAN 1 & 2
+            ConstrainedBox(
+              // INDUK memberikan constraints ke bawah (Constraints turun)
+              constraints: const BoxConstraints(
+                minWidth: 100,
+                maxWidth: 200,
+                minHeight: 100,
+                maxHeight: 200,
               ),
-            ),
-            const SizedBox(height: 20),
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.grey.withOpacity(0.2)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  children: const [
-                    ListTile(
-                      leading: Icon(Icons.email_outlined, color: Colors.green),
-                      title: Text('Email'),
-                      subtitle: Text('achmadspro@gmail.com'),
-                    ),
-                    Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
-                      leading: Icon(Icons.school_outlined, color: Colors.green),
-                      title: Text('Program Studi'),
-                      subtitle: Text('Software Engineering'),
-                    ),
-                    Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
-                      leading: Icon(
-                        Icons.verified_user_outlined,
-                        color: Colors.green,
-                      ),
-                      title: Text('Status Akademik'),
-                      subtitle: Text('Aktif (Semester 4)'),
-                    ),
-                    Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
-                      leading: Icon(Icons.star_outline, color: Colors.green),
-                      title: Text('IPK Sementara'),
-                      subtitle: Text('3.85'),
-                    ),
-                  ],
+              // ANAK mencoba menentukan ukuran (Ukuran naik)
+              child: Container(
+                width: 150, // Mencoba lebih besar dari maxWidth (Gagal, dipaksa 200)
+                height: 75, // Mencoba lebih kecil dari minHeight (Gagal, dipaksa 100)
+                color: const Color.fromARGB(255, 243, 114, 33),
+                child: const Text(
+                  'Saya minta 500x50, tapi dapatnya 200x100',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
             ),
-            const SizedBox(height: 20),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Mata Kuliah Semester Ini',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyPages2 extends StatelessWidget {
+  const MyPages2({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // const Divider(height: 40, thickness: 2),
+
+            const Text(
+              '3. Aturan Posisi (dengan Center)',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 10),
-            Card(
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-                side: BorderSide(color: Colors.grey.withOpacity(0.2)),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  children: const [
-                    ListTile(
-                      leading: Icon(Icons.code, color: Colors.green),
-                      title: Text('Pemrograman Aplikasi Mobile'),
-                      subtitle: Text('3 SKS • Selasa'),
-                    ),
-                    Divider(height: 1, indent: 16, endIndent: 16),
-                    ListTile(
-                      leading: Icon(Icons.storage, color: Colors.green),
-                      title: Text('Kecerdasan Buatan'),
-                      subtitle: Text('3 SKS • Rabu'),
-                    ),
-                  ],
+            const Text(
+              'Induk abu-abu berukuran 200x200. Kotak merah 80x80 tidak bisa menaruh dirinya di tengah, jadi kita gunakan widget Center.',
+            ),
+            const SizedBox(height: 10),
+
+            // CONTOH ATURAN 3 (CENTER)
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.grey[300], // Induk yang memiliki ruang
+              // Induk yang menentukan posisi
+              child: Center(
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  color: Colors.red,
+                  child: const Text(
+                    'Center',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
               ),
             ),
+
+            const Divider(height: 40, thickness: 2),
+
+            const Text(
+              '3. Aturan Posisi (dengan Align)',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Induk abu-abu berukuran 200x200. Kotak hijau 80x80 ditempatkan di pojok kanan bawah menggunakan widget Align.',
+            ),
+            const SizedBox(height: 10),
+
+            // CONTOH ATURAN 3 (ALIGN)
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.grey[300], // Induk yang memiliki ruang
+              // Induk yang menentukan posisi
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  color: Colors.green,
+                  child: const Text(
+                    'Align',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyPages3 extends StatelessWidget {
+  const MyPages3({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const Text(
+              '3. Aturan Posisi (dengan Align [MyPages3])',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 10),
+            const Text(
+              'Induk abu-abu berukuran 200x200. Kotak hijau 80x80 ditempatkan di pojok kanan bawah menggunakan widget Align.',
+            ),
+            const SizedBox(height: 10),
+
+            // CONTOH ATURAN 3 (ALIGN)
+            Container(
+              width: 200,
+              height: 200,
+              color: Colors.grey[300], // Induk yang memiliki ruang
+              // Induk yang menentukan posisi
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Container(
+                  width: 80,
+                  height: 80,
+                  color: Colors.green,
+                  child: const Text(
+                    'Align',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class MyPages extends StatelessWidget {
+  const MyPages({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // const Divider(height: 40, thickness: 2),
+
+            const MyPages1(),
+            const SizedBox(height: 10),
+            const MyPages2(),
+            const SizedBox(height: 10),
+            const MyPages3(),
+            const SizedBox(height: 10),
+
+            // CONTOH ATURAN 3 (CENTER)
+            const Divider(height: 40, thickness: 2),
+
+            // CONTOH ATURAN 3 (ALIGN)
           ],
         ),
       ),
